@@ -1,17 +1,39 @@
 <!doctype html>
-<html lang="ja"><head>
+<html lang="ja">
+<head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#080d18"><title>OTHELLO</title><link rel="stylesheet" href="style.css">
-</head><body><main class="app">
-<header><p class="eyebrow">ARCADE</p><h1><span>OTHELLO</span></h1><p class="sub">ふたりで遊べるオセロ</p></header>
-<section class="scores">
-<div class="player" id="blackPanel"><span>BLACK</span><i class="disc black"></i><b id="blackScore">2</b></div><div class="vs">VS</div>
-<div class="player" id="whitePanel"><span>WHITE</span><i class="disc white"></i><b id="whiteScore">2</b></div>
-</section>
-<div class="turn" aria-live="polite"><i id="turnDot" class="dot black-dot"></i><span id="turnText">BLACK の番です</span></div>
-<section class="board-frame"><div class="board" id="board" role="grid" aria-label="オセロ盤"></div></section>
-<p class="message" id="message" aria-live="polite">光っているマスに置けます</p>
-<div class="actions"><button id="hintButton" class="secondary">置ける場所を隠す</button><button id="resetButton" class="primary">最初から</button></div>
-<section class="rules"><h2>HOW TO PLAY</h2><p>相手の石を自分の石ではさんで裏返そう。縦・横・斜めのどの方向でもOK。置ける場所がない場合は自動でパスになります。</p></section>
-<footer>NEON HUNTER <span>◆</span> GAME ROOM</footer>
-</main><script src="script.js"></script></body></html>
+</head>
+<body>
+<main class="app">
+  <header><p class="eyebrow">ARCADE</p><h1><span>OTHELLO</span></h1><p class="sub">&#x3075;&#x305F;&#x308A;&#x3067;&#x904A;&#x3079;&#x308B;&#x30AA;&#x30BB;&#x30ED;</p></header>
+  <section id="startScreen" class="start-screen">
+    <div class="start-card">
+      <p class="section-kicker">SELECT BOARD</p>
+      <h2>&#x30E2;&#x30FC;&#x30C9;&#x3092;&#x9078;&#x3093;&#x3067;&#x30B9;&#x30BF;&#x30FC;&#x30C8;</h2>
+      <p class="start-description">&#x904A;&#x3073;&#x305F;&#x3044;&#x76E4;&#x9762;&#x30B5;&#x30A4;&#x30BA;&#x3092;&#x9078;&#x3093;&#x3067;&#x304F;&#x3060;&#x3055;&#x3044;</p>
+      <div class="mode-list">
+        <button class="mode-button" data-mode="6"><span class="mode-size">6<span>&#xD7;</span>6</span><span class="mode-copy"><b>QUICK</b><small>&#x30B9;&#x30D4;&#x30FC;&#x30C7;&#x30A3;&#x306B;&#x6C7A;&#x7740;</small></span><span class="mode-arrow">&#x203A;</span></button>
+        <button class="mode-button" data-mode="8"><span class="mode-size">8<span>&#xD7;</span>8</span><span class="mode-copy"><b>CLASSIC</b><small>&#x5B9A;&#x756A;&#x306E;&#x30AA;&#x30BB;&#x30ED;</small></span><span class="mode-arrow">&#x203A;</span></button>
+        <button class="mode-button" data-mode="9"><span class="mode-size">9<span>&#xD7;</span>9</span><span class="mode-copy"><b>EXTENDED</b><small>&#x3086;&#x3063;&#x305F;&#x308A;&#x5927;&#x76E4;&#x3067;&#x52DD;&#x8CA0;</small></span><span class="mode-arrow">&#x203A;</span></button>
+      </div>
+      <p class="resume-note" id="resumeNote">&#x305D;&#x308C;&#x305E;&#x308C;&#x306E;&#x30E2;&#x30FC;&#x30C9;&#x306E;&#x7D9A;&#x304D;&#x304B;&#x3089;&#x904A;&#x3079;&#x307E;&#x3059;</p>
+    </div>
+  </section>
+  <section id="gameScreen" hidden>
+    <div class="game-top"><button id="menuButton" class="menu-button">&#x2190; &#x30E2;&#x30FC;&#x30C9;&#x9078;&#x629E;</button><span id="modeLabel" class="mode-label"></span></div>
+    <section class="scores">
+      <div class="player" id="blackPanel"><span>BLACK</span><i class="disc black"></i><b id="blackScore">2</b></div><div class="vs">VS</div>
+      <div class="player" id="whitePanel"><span>WHITE</span><i class="disc white"></i><b id="whiteScore">2</b></div>
+    </section>
+    <div class="turn" aria-live="polite"><i id="turnDot" class="dot black-dot"></i><span id="turnText">BLACK</span></div>
+    <section class="board-frame"><div class="board" id="board" role="grid" aria-label="Othello board"></div></section>
+    <p class="message" id="message" aria-live="polite"></p>
+    <div class="actions"><button id="hintButton" class="secondary"></button><button id="resetButton" class="primary">&#x6700;&#x521D;&#x304B;&#x3089;</button></div>
+    <section class="rules"><h2>HOW TO PLAY</h2><p>&#x76F8;&#x624B;&#x306E;&#x77F3;&#x3092;&#x81EA;&#x5206;&#x306E;&#x77F3;&#x3067;&#x306F;&#x3055;&#x3093;&#x3067;&#x3072;&#x3063;&#x304F;&#x308A;&#x8FD4;&#x305D;&#x3046;&#x3002;&#x7E26;&#x30FB;&#x6A2A;&#x30FB;&#x659C;&#x3081;&#x306E;&#x3069;&#x306E;&#x65B9;&#x5411;&#x3067;&#x3082;OK;&#x7F6E;&#x3051;&#x308B;&#x5834;&#x6240;&#x304C;&#x306A;&#x3044;&#x3068;&#x304D;&#x306F;&#x81EA;&#x52D5;&#x3067;&#x30D1;&#x30B9;&#x3057;&#x307E;&#x3059;&#x3002;</p></section>
+  </section>
+  <footer>NEON HUNTER <span>&#x2726;</span> GAME ROOM</footer>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
