@@ -3,9 +3,9 @@ const DIRS=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
 const $=id=>document.getElementById(id);
 const jp=s=>JSON.parse('"'+s+'"');
 let N=8,board,turn,finished,showHints,lastMove;
-let specialMode=false,powersUsed,bonusMoves=0,freePlacementFor=null,overwriteFor=null,history=[];
+let specialMode=false,speedMode=false,turnDeadline=0,turnSeconds=2,clockInterval=null,powersUsed,bonusMoves=0,freePlacementFor=null,overwriteFor=null,history=[];
 let pendingPower=null,pendingPowerPlayer=null;
-const storageKey=(size,special=false)=>special?"othello-game-state-v1-special8":size===8?"othello-game-state-v1":`othello-game-state-v1-${size}`;
+const storageKey=(size,special=false,speed=false)=>speed?`othello-game-state-v1-speed${size}`:special?"othello-game-state-v1-special8":size===8?"othello-game-state-v1":`othello-game-state-v1-${size}`;
 const other=p=>p===BLACK?WHITE:BLACK;
 const name=p=>p===BLACK?"BLACK":"WHITE";
 
@@ -16,23 +16,45 @@ function initialBoard(size){
   return b;
 }
 function save(){
-  try{localStorage.setItem(storageKey(N,specialMode),JSON.stringify({size:N,specialMode,board,turn,finished,showHints,lastMove,powersUsed,bonusMoves,freePlacementFor,overwriteFor,history,pendingPower,pendingPowerPlayer}));}
+  try{localStorage.setItem(storageKey(N,specialMode,speedMode),JSON.stringify({size:N,specialMode,speedMode,turnDeadline,turnSeconds,board,turn,finished,showHints,lastMove,powersUsed,bonusMoves,freePlacementFor,overwriteFor,history,pendingPower,pendingPowerPlayer}));}
   catch(error){console.warn("Could not save the game state.",error);}
 }
-function load(size,special=false){
+function load(size,special=false,speed=false){
   try{
-    const saved=JSON.parse(localStorage.getItem(storageKey(size,special)));
-    if(!saved||!(saved.size===size||(size===8&&saved.size===undefined&&!special))||!(saved.specialMode===special||(saved.specialMode===undefined&&!special))||!Array.isArray(saved.board)||saved.board.length!==size||!saved.board.every(row=>Array.isArray(row)&&row.length===size&&row.every(v=>[EMPTY,BLACK,WHITE].includes(v)))||![BLACK,WHITE].includes(saved.turn)||typeof saved.finished!=="boolean"||typeof saved.showHints!=="boolean"||!(saved.lastMove===null||(Array.isArray(saved.lastMove)&&saved.lastMove.length===2&&saved.lastMove.every(v=>Number.isInteger(v)&&v>=0&&v<size))))return false;
-    N=size;specialMode=special;board=saved.board;turn=saved.turn;finished=saved.finished;showHints=saved.showHints;lastMove=saved.lastMove;
+    const saved=JSON.parse(localStorage.getItem(storageKey(size,special,speed)));
+    if(!saved||!(saved.size===size||(size===8&&saved.size===undefined&&!special&&!speed))||!(saved.specialMode===special||(saved.specialMode===undefined&&!special))||!(saved.speedMode===speed||(saved.speedMode===undefined&&!speed))||!Array.isArray(saved.board)||saved.board.length!==size||!saved.board.every(row=>Array.isArray(row)&&row.length===size&&row.every(v=>[EMPTY,BLACK,WHITE].includes(v)))||![BLACK,WHITE].includes(saved.turn)||typeof saved.finished!=="boolean"||typeof saved.showHints!=="boolean"||!(saved.lastMove===null||(Array.isArray(saved.lastMove)&&saved.lastMove.length===2&&saved.lastMove.every(v=>Number.isInteger(v)&&v>=0&&v<size))))return false;
+    N=size;specialMode=special;speedMode=speed;turnDeadline=saved.turnDeadline||0;turnSeconds=saved.turnSeconds||2;board=saved.board;turn=saved.turn;finished=saved.finished;showHints=saved.showHints;lastMove=saved.lastMove;
     powersUsed=saved.powersUsed||{[BLACK]:false,[WHITE]:false};bonusMoves=saved.bonusMoves||0;freePlacementFor=saved.freePlacementFor??null;overwriteFor=saved.overwriteFor??null;history=Array.isArray(saved.history)?saved.history:[];pendingPower=saved.pendingPower||null;pendingPowerPlayer=saved.pendingPowerPlayer??null;
     return true;
   }catch(error){return false;}
 }
-function hasSavedGame(size,special=false){
-  const previous=[N,board,turn,finished,showHints,lastMove,specialMode,powersUsed,bonusMoves,freePlacementFor,overwriteFor,history,pendingPower,pendingPowerPlayer];
-  const found=load(size,special);
-  [N,board,turn,finished,showHints,lastMove,specialMode,powersUsed,bonusMoves,freePlacementFor,overwriteFor,history,pendingPower,pendingPowerPlayer]=previous;
+function hasSavedGame(size,special=false,speed=false){
+  const previous=[N,board,turn,finished,showHints,lastMove,specialMode,speedMode,turnDeadline,turnSeconds,powersUsed,bonusMoves,freePlacementFor,overwriteFor,history,pendingPower,pendingPowerPlayer];
+  const found=load(size,special,speed);
+  [N,board,turn,finished,showHints,lastMove,specialMode,speedMode,turnDeadline,turnSeconds,powersUsed,bonusMoves,freePlacementFor,overwriteFor,history,pendingPower,pendingPowerPlayer]=previous;
   return found;
+}
+function startClock(){
+  clearInterval(clockInterval);clockInterval=null;
+  $("speedClock").hidden=!speedMode;
+  if(!speedMode||finished)return;
+  if(history.length===0){turnDeadline=0;$("countdown").textContent="2.0";return;}
+  if(!turnDeadline)turnDeadline=Date.now()+turnSeconds*1000;
+  if(turnDeadline<=Date.now()){timeoutTurn();return;}
+  const tick=()=>{
+    const remaining=Math.max(0,turnDeadline-Date.now());$("countdown").textContent=(remaining/1000).toFixed(1);
+    if(remaining<=0){clearInterval(clockInterval);clockInterval=null;timeoutTurn();}
+  };
+  clockInterval=setInterval(tick,50);tick();
+}
+function timeoutTurn(){
+  if(!speedMode||finished)return;
+  const skipped=turn;turn=other(turn);turnSeconds=4;let notice=`${name(skipped)} ${jp("\\u6642\\u9593\\u5207\\u308C\\u3067\\u30B9\\u30AD\\u30C3\\u30D7\\u3057\\u307E\\u3057\\u305F")} / ${jp("\\u6B21\\u306E\\u756A\\u306F4\\u79D2")}`;
+  if(!legalMoves(turn).length){
+    if(!legalMoves(skipped).length)finished=true;
+    else{turn=skipped;notice+=` / ${name(turn)} ${jp("\\u306B\\u7F6E\\u3051\\u308B\\u5834\\u6240\\u304C\\u306A\\u3044\\u305F\\u3081\\u30D1\\u30B9")}`;}
+  }
+  turnDeadline=Date.now()+turnSeconds*1000;render(notice);
 }
 function flipsAt(r,c,p,allowOccupied=false){
   if(!allowOccupied&&board[r][c]!==EMPTY)return [];
@@ -63,6 +85,7 @@ function scores(){
 function snapshot(){return {board:board.map(row=>row.slice()),turn,finished,lastMove:lastMove&&lastMove.slice(),bonusMoves,freePlacementFor,overwriteFor};}
 function move(r,c){
   if(finished)return;
+  if(speedMode&&history.length>0&&Date.now()>=turnDeadline){timeoutTurn();return;}
   if(pendingPower==="undo")return;
   const mover=turn,selected=pendingPowerPlayer===turn?pendingPower:null;
   const flips=flipsAt(r,c,mover,specialMode&&(overwriteFor===mover||selected==="overwrite"));
@@ -82,6 +105,7 @@ function move(r,c){
     if(!legalMoves(other(turn)).length)finished=true;
     else{const passed=turn;turn=other(turn);notice=`${name(passed)} ${jp("\\u306f\\u7F6E\\u3051\\u308B\\u5834\\u6240\\u304C\\u306A\\u3044\\u305F\\u3081\\u30D1\\u30B9\\u3057\\u307E\\u3059")}`;}
   }
+  if(speedMode){turnSeconds=2;turnDeadline=Date.now()+turnSeconds*1000;}
   render(notice);
 }
 function undoLastMove(player){
@@ -128,28 +152,29 @@ function render(notice=""){
     button.disabled=!specialMode||finished||powersUsed[turn]||(power==="extra"&&history.length===0)||(power==="undo"&&(!history.length||powersUsed[BLACK]||powersUsed[WHITE]));
   });
   $("turnText").textContent=jp($("turnText").textContent);$("message").textContent=jp($("message").textContent);$("hintButton").textContent=jp($("hintButton").textContent);
+  startClock();
   save();
 }
-function startGame(size,special=false,resume=false){
-  if(resume&&load(size,special)){}else{N=size;specialMode=special;board=initialBoard(size);turn=BLACK;finished=false;showHints=true;lastMove=null;powersUsed={[BLACK]:false,[WHITE]:false};bonusMoves=0;freePlacementFor=null;overwriteFor=null;history=[];pendingPower=null;pendingPowerPlayer=null;}
-  $("startScreen").hidden=true;$("gameScreen").hidden=false;$("modeLabel").textContent=special?"8 x 8 SPECIAL":`${size} x ${size}`;
+function startGame(size,special=false,resume=false,speed=false){
+  if(resume&&load(size,special,speed)){}else{N=size;specialMode=special;speedMode=speed;turnDeadline=0;turnSeconds=2;board=initialBoard(size);turn=BLACK;finished=false;showHints=true;lastMove=null;powersUsed={[BLACK]:false,[WHITE]:false};bonusMoves=0;freePlacementFor=null;overwriteFor=null;history=[];pendingPower=null;pendingPowerPlayer=null;}
+  $("startScreen").hidden=true;$("gameScreen").hidden=false;$("modeLabel").textContent=special?"8 x 8 SPECIAL":speed?`${size} x ${size} SPEED`:`${size} x ${size}`;
   render(resume?"":jp("\\u30B2\\u30FC\\u30E0\\u30B9\\u30BF\\u30FC\\u30C8\\uFF01 BLACK \\u304B\\u3089\\u59CB\\u3081\\u3088\\u3046"));
 }
 function updateResumeButtons(){
   document.querySelectorAll(".mode-button").forEach(button=>{
-    const mode=button.dataset.mode,size=mode==="special8"?8:Number(mode),special=mode==="special8";
+    const mode=button.dataset.mode,speed=mode==="speed6"||mode==="speed8",special=mode==="special8",size=mode==="speed6"?6:mode==="speed8"||special?8:Number(mode);
     button.querySelector(".resume-button")?.remove();
-    if(hasSavedGame(size,special)){const resume=document.createElement("span");resume.className="resume-button";resume.textContent=jp("\\u7D9A\\u304D\\u304B\\u3089");resume.addEventListener("click",event=>{event.stopPropagation();startGame(size,special,true);});button.append(resume);}
+    if(hasSavedGame(size,special,speed)){const resume=document.createElement("span");resume.className="resume-button";resume.textContent=jp("\\u7D9A\\u304D\\u304B\\u3089");resume.addEventListener("click",event=>{event.stopPropagation();startGame(size,special,true,speed);});button.append(resume);}
   });
 }
 document.querySelectorAll(".mode-button").forEach(button=>button.addEventListener("click",()=>{
-  const mode=button.dataset.mode,size=mode==="special8"?8:Number(mode),special=mode==="special8";
-  if(hasSavedGame(size,special)&&!confirm(`${mode} ${jp("\\u306E\\u4FDD\\u5B58\\u30C7\\u30FC\\u30BF\\u3092\\u4E0A\\u66F8\\u304D\\u3057\\u3066\\u65B0\\u3057\\u304F\\u59CB\\u3081\\u307E\\u3059\\u304B\\uFF1F")}`))return;
-  startGame(size,special);
+  const mode=button.dataset.mode,speed=mode==="speed6"||mode==="speed8",special=mode==="special8",size=mode==="speed6"?6:mode==="speed8"||special?8:Number(mode);
+  if(hasSavedGame(size,special,speed)&&!confirm(`${mode} ${jp("\\u306E\\u4FDD\\u5B58\\u30C7\\u30FC\\u30BF\\u3092\\u4E0A\\u66F8\\u304D\\u3057\\u3066\\u65B0\\u3057\\u304F\\u59CB\\u3081\\u307E\\u3059\\u304B\\uFF1F")}`))return;
+  startGame(size,special,false,speed);
 }));
 $("menuButton").addEventListener("click",()=>{$("gameScreen").hidden=true;$("startScreen").hidden=false;updateResumeButtons();});
 $("hintButton").addEventListener("click",()=>{showHints=!showHints;render();});
-$("resetButton").addEventListener("click",()=>{if(confirm(jp("\\u30B2\\u30FC\\u30E0\\u3092\\u6700\\u521D\\u304B\\u3089\\u3084\\u308A\\u76F4\\u3057\\u307E\\u3059\\u304B\\uFF1F"))){startGame(N,specialMode);}});
+$("resetButton").addEventListener("click",()=>{if(confirm(jp("\\u30B2\\u30FC\\u30E0\\u3092\\u6700\\u521D\\u304B\\u3089\\u3084\\u308A\\u76F4\\u3057\\u307E\\u3059\\u304B\\uFF1F"))){startGame(N,specialMode,false,speedMode);}});
 document.querySelectorAll(".special-option").forEach(button=>button.addEventListener("click",()=>selectPower(button.dataset.power)));
 $("cancelPowerButton").addEventListener("click",()=>{pendingPower=null;pendingPowerPlayer=null;render();});
 $("confirmUndoButton").addEventListener("click",()=>{if(pendingPower==="undo"&&pendingPowerPlayer===turn)undoLastMove(turn);});
