@@ -17,6 +17,8 @@
         <button class="mode-button" data-mode="speed6"><span class="mode-size">6<span>&#xD7;</span>6</span><span class="mode-copy"><b>SPEED</b><small>2&#x79D2;&#x4EE5;&#x5185;&#x306B;&#x6253;&#x3064;&#x30BF;&#x30A4;&#x30E0;&#x30A2;&#x30BF;&#x30C3;&#x30AF;</small></span><span class="mode-arrow">&#x203A;</span></button>
         <button class="mode-button" data-mode="8"><span class="mode-size">8<span>&#xD7;</span>8</span><span class="mode-copy"><b>CLASSIC</b><small>&#x5B9A;&#x756A;&#x306E;&#x30AA;&#x30BB;&#x30ED;</small></span><span class="mode-arrow">&#x203A;</span></button>
         <button class="mode-button" data-mode="speed8"><span class="mode-size">8<span>&#xD7;</span>8</span><span class="mode-copy"><b>SPEED</b><small>2&#x79D2;&#x4EE5;&#x5185;&#x306B;&#x6253;&#x3064;&#x30BF;&#x30A4;&#x30E0;&#x30A2;&#x30BF;&#x30C3;&#x30AF;</small></span><span class="mode-arrow">&#x203A;</span></button>
+        <button class="mode-button" data-mode="bomb8"><span class="mode-size">8<span>&#xD7;</span>8</span><span class="mode-copy"><b>BOMB</b><small>&#x7206;&#x5F3E;&#x306E;&#x4F4D;&#x7F6E;&#x3092;5&#x79D2;&#x3067;&#x899A;&#x3048;&#x3088;&#x3046;</small></span><span class="mode-arrow">&#x203A;</span></button>
+        <button class="mode-button" data-mode="bonus8"><span class="mode-size">8<span>&#xD7;</span>8</span><span class="mode-copy"><b>BONUS</b><small>&#x30DC;&#x30FC;&#x30CA;&#x30B9;&#x30DE;&#x30B9;&#x3067;+5&#x30DD;&#x30A4;&#x30F3;&#x30C8;</small></span><span class="mode-arrow">&#x203A;</span></button>
         <button class="mode-button" data-mode="special8"><span class="mode-size">8<span>&#xD7;</span>8</span><span class="mode-copy"><b>SPECIAL</b><small>&#x7279;&#x6B8A;&#x30EB;&#x30FC;&#x30EB;&#x3092;&#x4F7F;&#x3063;&#x3066;&#x52DD;&#x8CA0;</small></span><span class="mode-arrow">&#x203A;</span></button>
         <button class="mode-button" data-mode="9"><span class="mode-size">9<span>&#xD7;</span>9</span><span class="mode-copy"><b>EXTENDED</b><small>&#x3086;&#x3063;&#x305F;&#x308A;&#x5927;&#x76E4;&#x3067;&#x52DD;&#x8CA0;</small></span><span class="mode-arrow">&#x203A;</span></button>
       </div>
@@ -26,11 +28,13 @@
   <section id="gameScreen" hidden>
     <div class="game-top"><button id="menuButton" class="menu-button">&#x2190; &#x30E2;&#x30FC;&#x30C9;&#x9078;&#x629E;</button><span id="modeLabel" class="mode-label"></span></div>
     <section class="scores">
-      <div class="player" id="blackPanel"><span>BLACK</span><i class="disc black"></i><b id="blackScore">2</b></div><div class="vs">VS</div>
-      <div class="player" id="whitePanel"><span>WHITE</span><i class="disc white"></i><b id="whiteScore">2</b></div>
+      <div class="player" id="blackPanel"><span>BLACK</span><i class="disc black"></i><b id="blackScore">2</b><small class="point-score" id="blackPointWrap" hidden>PTS <b id="blackPoints">0</b></small></div><div class="vs">VS</div>
+      <div class="player" id="whitePanel"><span>WHITE</span><i class="disc white"></i><b id="whiteScore">2</b><small class="point-score" id="whitePointWrap" hidden>PTS <b id="whitePoints">0</b></small></div>
     </section>
     <div class="turn" aria-live="polite"><i id="turnDot" class="dot black-dot"></i><span id="turnText">BLACK</span></div>
     <div id="speedClock" class="speed-clock" hidden><span id="countdown">2.0</span><small>SEC</small></div>
+    <div id="bombPanel" class="bomb-panel" hidden><span id="bombStatus">&#x7206;&#x5F3E;&#x3092;&#x899A;&#x3048;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;</span><b id="bombCountdown">5.0</b></div>
+    <div id="bonusPanel" class="bonus-panel" hidden><span>&#x91D1;&#x67A0;&#x30DE;&#x30B9;&#x306B;&#x7D42;&#x5C40;&#x6642;&#x306B;&#x81EA;&#x5206;&#x306E;&#x77F3;&#x304C;&#x3042;&#x308C;&#x3070;&#x5404;+5&#x30DD;&#x30A4;&#x30F3;&#x30C8;</span><b id="bonusRemaining">×3</b></div>
     <section id="specialPanel" class="special-panel" hidden>
       <div class="special-heading"><b>SPECIAL RULE</b><span id="specialStatus"></span></div>
       <p class="special-help">&#x4F7F;&#x3048;&#x308B;&#x7279;&#x6B8A;&#x30EB;&#x30FC;&#x30EB;&#x3092;1&#x3064;&#x9078;&#x3073;&#x307E;&#x3059;&#x3002;&#x9ED2;&#x30FB;&#x767D;&#x305D;&#x308C;&#x305E;&#x308C;1&#x56DE;&#x3067;&#x3059;&#x3002;</p>
