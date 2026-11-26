@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080d18"><title>OTHELLO v1.0.0.3</title><link rel="stylesheet" href="style.css">
+<meta name="theme-color" content="#080d18"><title>OTHELLO v1.0.0.4</title><link rel="stylesheet" href="style.css">
 </head>
 <body>
 <main class="app">
@@ -14,12 +14,13 @@
       <p class="start-description">&#x904A;&#x3073;&#x305F;&#x3044;&#x76E4;&#x9762;&#x30B5;&#x30A4;&#x30BA;&#x3092;&#x9078;&#x3093;&#x3067;&#x304F;&#x3060;&#x3055;&#x3044;</p>
       <div class="mode-list">
         <button class="mode-button" data-mode="6"><span class="mode-size">6<span>&#xD7;</span>6</span><span class="mode-copy"><b>QUICK</b><small>&#x30B9;&#x30D4;&#x30FC;&#x30C7;&#x30A3;&#x306B;&#x6C7A;&#x7740;</small></span><span class="mode-arrow">&#x203A;</span></button>
-        <button class="mode-button" data-mode="speed6"><span class="mode-size">6<span>&#xD7;</span>6</span><span class="mode-copy"><b>SPEED</b><small>2&#x79D2;&#x4EE5;&#x5185;&#x306B;&#x6253;&#x3064;&#x30BF;&#x30A4;&#x30E0;&#x30A2;&#x30BF;&#x30C3;&#x30AF;</small></span><span class="mode-arrow">&#x203A;</span></button>
+        <button class="mode-button" data-mode="speed6"><span class="mode-size">6<span>&#xD7;</span>6</span><span class="mode-copy"><b>SPEED</b><small>3&#x79D2;&#x4EE5;&#x5185;&#x306B;&#x6253;&#x3064;&#x30BF;&#x30A4;&#x30E0;&#x30A2;&#x30BF;&#x30C3;&#x30AF;</small></span><span class="mode-arrow">&#x203A;</span></button>
         <button class="mode-button" data-mode="8"><span class="mode-size">8<span>&#xD7;</span>8</span><span class="mode-copy"><b>CLASSIC</b><small>&#x5B9A;&#x756A;&#x306E;&#x30AA;&#x30BB;&#x30ED;</small></span><span class="mode-arrow">&#x203A;</span></button>
-        <button class="mode-button" data-mode="speed8"><span class="mode-size">8<span>&#xD7;</span>8</span><span class="mode-copy"><b>SPEED</b><small>2&#x79D2;&#x4EE5;&#x5185;&#x306B;&#x6253;&#x3064;&#x30BF;&#x30A4;&#x30E0;&#x30A2;&#x30BF;&#x30C3;&#x30AF;</small></span><span class="mode-arrow">&#x203A;</span></button>
+        <button class="mode-button" data-mode="speed8"><span class="mode-size">8<span>&#xD7;</span>8</span><span class="mode-copy"><b>SPEED</b><small>3&#x79D2;&#x4EE5;&#x5185;&#x306B;&#x6253;&#x3064;&#x30BF;&#x30A4;&#x30E0;&#x30A2;&#x30BF;&#x30C3;&#x30AF;</small></span><span class="mode-arrow">&#x203A;</span></button>
         <button class="mode-button" data-mode="bomb8"><span class="mode-size">8<span>&#xD7;</span>8</span><span class="mode-copy"><b>BOMB</b><small>&#x7206;&#x5F3E;&#x306E;&#x4F4D;&#x7F6E;&#x3092;5&#x79D2;&#x3067;&#x899A;&#x3048;&#x3088;&#x3046;</small></span><span class="mode-arrow">&#x203A;</span></button>
-        <button class="mode-button" data-mode="bonus8"><span class="mode-size">8<span>&#xD7;</span>8</span><span class="mode-copy"><b>BONUS</b><small>&#x30DC;&#x30FC;&#x30CA;&#x30B9;&#x30DE;&#x30B9;&#x3067;+5&#x30DD;&#x30A4;&#x30F3;&#x30C8;</small></span><span class="mode-arrow">&#x203A;</span></button>
+        <button class="mode-button" data-mode="bonus8"><span class="mode-size">8<span>&#xD7;</span>8</span><span class="mode-copy"><b>BONUS</b><small>&#x30DC;&#x30FC;&#x30CA;&#x30B9;&#x30DE;&#x30B9;&#x3067;+10&#x30DD;&#x30A4;&#x30F3;&#x30C8;</small></span><span class="mode-arrow">&#x203A;</span></button>
         <button class="mode-button" data-mode="special8"><span class="mode-size">8<span>&#xD7;</span>8</span><span class="mode-copy"><b>SPECIAL</b><small>&#x7279;&#x6B8A;&#x30EB;&#x30FC;&#x30EB;&#x3092;&#x4F7F;&#x3063;&#x3066;&#x52DD;&#x8CA0;</small></span><span class="mode-arrow">&#x203A;</span></button>
+        <button class="mode-button" data-mode="roulette8"><span class="mode-size">8<span>&#xD7;</span>8</span><span class="mode-copy"><b>ROULETTE</b><small>&#x6BCE;&#x624B;&#x756A;&#x30EB;&#x30FC;&#x30EC;&#x30C3;&#x30C8;&#x3067;&#x80FD;&#x529B;&#x304C;&#x5909;&#x308F;&#x308B;</small></span><span class="mode-arrow">&#x203A;</span></button>
         <button class="mode-button" data-mode="9"><span class="mode-size">9<span>&#xD7;</span>9</span><span class="mode-copy"><b>EXTENDED</b><small>&#x3086;&#x3063;&#x305F;&#x308A;&#x5927;&#x76E4;&#x3067;&#x52DD;&#x8CA0;</small></span><span class="mode-arrow">&#x203A;</span></button>
       </div>
       <p class="resume-note" id="resumeNote">&#x305D;&#x308C;&#x305E;&#x308C;&#x306E;&#x30E2;&#x30FC;&#x30C9;&#x306E;&#x7D9A;&#x304D;&#x304B;&#x3089;&#x904A;&#x3079;&#x307E;&#x3059;</p>
@@ -32,23 +33,36 @@
       <div class="player" id="whitePanel"><span>WHITE</span><i class="disc white"></i><b id="whiteScore">2</b><small class="point-score" id="whitePointWrap" hidden>PTS <b id="whitePoints">0</b></small></div>
     </section>
     <div class="turn" aria-live="polite"><i id="turnDot" class="dot black-dot"></i><span id="turnText">BLACK</span></div>
-    <div id="speedClock" class="speed-clock" hidden><span id="countdown">2.0</span><small>SEC</small></div>
+    <div id="speedClock" class="speed-clock" hidden><span id="countdown">3.0</span><small>SEC</small><button id="pauseClockButton" class="clock-pause">&#x4E00;&#x6642;&#x505C;&#x6B62;</button></div>
+    <div id="passBanner" class="pass-toast" role="status" aria-live="assertive" hidden><span class="pass-symbol">PASS</span><b id="passText"></b></div>
     <div id="bombPanel" class="bomb-panel" hidden><span id="bombStatus">&#x7206;&#x5F3E;&#x3092;&#x899A;&#x3048;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;</span><b id="bombCountdown">5.0</b></div>
-    <div id="bonusPanel" class="bonus-panel" hidden><span>&#x91D1;&#x67A0;&#x30DE;&#x30B9;&#x306B;&#x7D42;&#x5C40;&#x6642;&#x306B;&#x81EA;&#x5206;&#x306E;&#x77F3;&#x304C;&#x3042;&#x308C;&#x3070;&#x5404;+5&#x30DD;&#x30A4;&#x30F3;&#x30C8;</span><b id="bonusRemaining">×3</b></div>
+    <div id="bonusPanel" class="bonus-panel" hidden><span>&#x91D1;&#x67A0;&#x30DE;&#x30B9;&#x306B;&#x7D42;&#x5C40;&#x6642;&#x306B;&#x81EA;&#x5206;&#x306E;&#x77F3;&#x304C;&#x3042;&#x308C;&#x3070;&#x5404;+10&#x30DD;&#x30A4;&#x30F3;&#x30C8;</span><b id="bonusRemaining">×3</b></div>
     <section id="specialPanel" class="special-panel" hidden>
       <div class="special-heading"><b>SPECIAL RULE</b><span id="specialStatus"></span></div>
-      <p class="special-help">&#x4F7F;&#x3048;&#x308B;&#x7279;&#x6B8A;&#x30EB;&#x30FC;&#x30EB;&#x3092;1&#x3064;&#x9078;&#x3073;&#x307E;&#x3059;&#x3002;&#x9ED2;&#x30FB;&#x767D;&#x305D;&#x308C;&#x305E;&#x308C;1&#x56DE;&#x3067;&#x3059;&#x3002;</p>
+      <p class="special-help">ルーレットは最初に1回だけ回し、出た同じルールを黒・白がそれぞれ1回使えます。使うタイミングは各プレイヤーが選べます。「相手の番を飛ばす」「直前の1手をやり直す」は初手では使えません。使わない選択もできます。</p>
+      <button id="spinPowerButton" class="roulette-button">&#x30EB;&#x30FC;&#x30EC;&#x30C3;&#x30C8;&#x3092;&#x56DE;&#x3059;</button>
       <div class="special-options">
-        <button class="special-option" data-power="extra" title="&#x6B21;&#x306E;2&#x624B;&#x3092;&#x9023;&#x7D9A;&#x3067;&#x6253;&#x3061;&#x3001;&#x76F8;&#x624B;&#x306E;&#x756A;&#x3092;&#x98DB;&#x3070;&#x3059;">&#x76F8;&#x624B;&#x306E;&#x756A;&#x3092;&#x98DB;&#x3070;&#x3059;</button>
-        <button class="special-option" data-power="undo" title="&#x76F4;&#x524D;&#x306E;1&#x624B;&#x3092;&#x53D6;&#x308A;&#x6D88;&#x3059;">&#x76F4;&#x524D;&#x306E;1&#x624B;&#x3092;&#x3084;&#x308A;&#x76F4;&#x3059;</button>
-        <button class="special-option" data-power="free" title="&#x77F3;&#x306B;&#x96A3;&#x63A5;&#x3059;&#x308B;&#x7A7A;&#x304D;&#x30DE;&#x30B9;&#x306B;&#x3001;&#x8FD4;&#x3055;&#x305A;&#x306B;&#x7F6E;&#x3051;&#x308B;">&#x306F;&#x3055;&#x307E;&#x306A;&#x304F;&#x3066;&#x3082;&#x7F6E;&#x3051;&#x308B;</button>
-        <button class="special-option" data-power="overwrite" title="&#x77F3;&#x304C;&#x3042;&#x308B;&#x30DE;&#x30B9;&#x3067;&#x3082;&#x3001;&#x8FD4;&#x305B;&#x308C;&#x3070;&#x4E0A;&#x66F8;&#x304D;&#x3067;&#x304D;&#x308B;">&#x77F3;&#x3092;&#x4E0A;&#x66F8;&#x304D;&#x3059;&#x308B;</button>
+        <div class="special-option" data-power="extra" title="&#x6B21;&#x306E;2&#x624B;&#x3092;&#x9023;&#x7D9A;&#x3067;&#x6253;&#x3061;&#x3001;&#x76F8;&#x624B;&#x306E;&#x756A;&#x3092;&#x98DB;&#x3070;&#x3059;">&#x76F8;&#x624B;&#x306E;&#x756A;&#x3092;&#x98DB;&#x3070;&#x3059;</div>
+        <div class="special-option" data-power="undo" title="&#x76F4;&#x524D;&#x306E;1&#x624B;&#x3092;&#x53D6;&#x308A;&#x6D88;&#x3059;">&#x76F4;&#x524D;&#x306E;1&#x624B;&#x3092;&#x3084;&#x308A;&#x76F4;&#x3059;</div>
+        <div class="special-option" data-power="free" title="&#x77F3;&#x306B;&#x96A3;&#x63A5;&#x3059;&#x308B;&#x7A7A;&#x304D;&#x30DE;&#x30B9;&#x306B;&#x3001;&#x8FD4;&#x3055;&#x305A;&#x306B;&#x7F6E;&#x3051;&#x308B;">&#x306F;&#x3055;&#x307E;&#x306A;&#x304F;&#x3066;&#x3082;&#x7F6E;&#x3051;&#x308B;</div>
+        <div class="special-option" data-power="overwrite" title="&#x77F3;&#x304C;&#x3042;&#x308B;&#x30DE;&#x30B9;&#x3067;&#x3082;&#x3001;&#x8FD4;&#x305B;&#x308C;&#x3070;&#x4E0A;&#x66F8;&#x304D;&#x3067;&#x304D;&#x308B;">&#x77F3;&#x3092;&#x4E0A;&#x66F8;&#x304D;&#x3059;&#x308B;</div>
       </div>
       <div class="special-confirm" id="specialConfirm" hidden>
         <button class="special-cancel" id="cancelPowerButton">&#x3084;&#x3063;&#x3071;&#x308A;&#x4F7F;&#x308F;&#x306A;&#x3044;</button>
         <button class="special-undo-confirm" id="confirmUndoButton" hidden>&#x3084;&#x308A;&#x76F4;&#x3057;&#x3092;&#x5B9F;&#x884C;</button>
       </div>
       <p class="special-turn-note" id="specialTurnNote" aria-live="polite"></p>
+    </section>
+    <section id="rouletteModePanel" class="special-panel roulette-mode-panel" hidden>
+      <div class="special-heading"><b>TURN ROULETTE</b><span id="rouletteModeStatus"></span></div>
+      <p class="special-help">&#x6BCE;&#x624B;&#x756A;&#x306E;&#x6700;&#x521D;&#x306B;&#x30EB;&#x30FC;&#x30EC;&#x30C3;&#x30C8;&#x3092;&#x56DE;&#x3057;&#x3001;&#x51FA;&#x305F;&#x80FD;&#x529B;&#x3092;&#x305D;&#x306E;&#x624B;&#x756A;&#x3067;&#x4F7F;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+      <button id="rouletteSpinButton" class="roulette-button">&#x30EB;&#x30FC;&#x30EC;&#x30C3;&#x30C8;&#x3092;&#x56DE;&#x3059;</button>
+      <div class="special-options roulette-mode-options">
+        <div class="roulette-mode-option" data-roulette-power="pass">&#x81EA;&#x5206;&#x306E;&#x756A;&#x3092;&#x30D1;&#x30B9;</div>
+        <div class="roulette-mode-option" data-roulette-power="free">&#x306F;&#x3055;&#x307E;&#x306A;&#x304F;&#x3066;&#x3082;&#x7F6E;&#x3051;&#x308B;</div>
+        <div class="roulette-mode-option" data-roulette-power="overwrite">&#x306F;&#x3055;&#x3093;&#x3067;&#x4E0A;&#x66F8;&#x304D;</div>
+        <div class="roulette-mode-option" data-roulette-power="extra">&#x76F8;&#x624B;&#x3092;&#x98DB;&#x3070;&#x3057;2&#x56DE;&#x7F6E;&#x3051;&#x308B;</div>
+      </div>
     </section>
     <section class="board-frame"><div class="board" id="board" role="grid" aria-label="Othello board"></div></section>
     <p class="message" id="message" aria-live="polite"></p>
